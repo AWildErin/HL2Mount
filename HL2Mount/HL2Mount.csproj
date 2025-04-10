@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\sourcepp\lang\csharp\src\vpkpp\vpkpp.csproj" />
+    <ProjectReference Include="..\sourcepp\lang\csharp\src\vtfpp\vtfpp.csproj" />
+  </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Sandbox.Mounting">
+            <HintPath>D:\Steam Games\steamapps\common\sbox\bin\managed\Sandbox.Mounting.dll</HintPath>
+        </Reference>
+        <Reference Include="Sandbox.System">
+            <HintPath>D:\Steam Games\steamapps\common\sbox\bin\managed\Sandbox.System.dll</HintPath>
+        </Reference>
+        <Reference Include="Sandbox.Engine">
+            <HintPath>D:\Steam Games\steamapps\common\sbox\bin\managed\Sandbox.Engine.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <PropertyGroup>
+      <DestinationPath>D:\Steam Games\steamapps\common\sbox\mount\hl2mount</DestinationPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <FilesToCopy Include="$(OutputPath)\HL2Mount.dll" />
+      <FilesToCopy Include="$(OutputPath)\HL2Mount.pdb" />
+      <FilesToCopy Include="$(OutputPath)\vpkpp.dll" />
+      <FilesToCopy Include="$(OutputPath)\vpkpp.pdb" />
+      <FilesToCopy Include="$(OutputPath)\vtfpp.dll" />
+      <FilesToCopy Include="$(OutputPath)\vtfpp.pdb" />
+      <FilesToCopy Include="$(SolutionDir)sourcepp\lang\csharp\src\vpkpp\sourcepp_vpkppc.dll" />
+      <FilesToCopy Include="$(SolutionDir)sourcepp\lang\csharp\src\vtfpp\sourcepp_vtfppc.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(DestinationPath)" />
+  </Target>
+
+</Project>
